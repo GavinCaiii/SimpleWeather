@@ -1,9 +1,9 @@
 package com.caitou.simpleweather.activities;
 
-        import android.support.v7.app.AppCompatActivity;
-        import android.os.Bundle;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
-        import com.caitou.simpleweather.R;
+import com.caitou.simpleweather.R;
 
 public class MainActivity extends AppCompatActivity {
 
