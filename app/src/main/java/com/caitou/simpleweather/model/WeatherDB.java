@@ -32,9 +32,9 @@ public class WeatherDB {
     private static final String TB_CITY_CODE = "city_code";
     private static final String TB_CITY_ID = "city_id";
 
-    private static final String TB_COUNTRY = "country";
-    private static final String TB_COUNTRY_NAME = "country_name";
-    private static final String TB_COUNTRY_CODE = "country_code";
+    private static final String TB_COUNTY = "county";
+    private static final String TB_COUNTY_NAME = "county_name";
+    private static final String TB_COUNTY_CODE = "county_code";
 
     // 数据库版本
     public static int VERSION = 1;
@@ -76,7 +76,7 @@ public class WeatherDB {
                 Province province = new Province();
                 province.setId(cursor.getInt(cursor.getColumnIndex("id")));
                 province.setProvinceName(cursor.getString(cursor.getColumnIndex(TB_PROVINCE_NAME)));
-                province.setProvinceCode(cursor.getString(cursor.getColumnIndex(TB_COUNTRY_CODE)));
+                province.setProvinceCode(cursor.getString(cursor.getColumnIndex(TB_PROVINCE_CODE)));
                 list.add(province);
             } while (cursor.moveToNext());
         }
@@ -89,8 +89,8 @@ public class WeatherDB {
             return;
         ContentValues values = new ContentValues();
         values.put(TB_CITY_NAME, city.getCityName());
-        values.put(TB_PROVINCE_ID, city.getProvinceId());
         values.put(TB_CITY_CODE, city.getCityCode());
+        values.put(TB_PROVINCE_ID, city.getProvinceId());
 
         db.insert(TB_CITY, null, values);
     }
@@ -114,29 +114,29 @@ public class WeatherDB {
     }
 
     // 将country实例存储到数据库
-    public void saveCountries(Country country) {
-        if (country == null)
+    public void saveCounties(County county) {
+        if (county == null)
             return;
         ContentValues values = new ContentValues();
-        values.put(TB_COUNTRY_NAME, country.getCountryName());
-        values.put(TB_COUNTRY_CODE, country.getCountryCode());
-        values.put(TB_CITY_ID, country.getCityId());
+        values.put(TB_COUNTY_NAME, county.getCountryName());
+        values.put(TB_COUNTY_CODE, county.getCountryCode());
+        values.put(TB_CITY_ID, county.getCityId());
 
-        db.insert(TB_CITY, null, values);
+        db.insert(TB_COUNTY, null, values);
     }
 
     // 从数据库中读取某城市下所有的县城信息
-    public List<Country> loadCountries(int cityId) {
-        List<Country> list = new ArrayList<>();
-        Cursor cursor = db.query(TB_COUNTRY, null, "city_id = ?",
+    public List<County> loadCounties(int cityId) {
+        List<County> list = new ArrayList<>();
+        Cursor cursor = db.query(TB_COUNTY, null, "city_id = ?",
                 new String[]{String.valueOf(cityId)}, null, null, null);
         if (cursor.moveToFirst()) {
             do {
-                Country country = new Country();
-                country.setId(cursor.getInt(cursor.getColumnIndex("id")));
-                country.setCountryName(cursor.getString(cursor.getColumnIndex(TB_COUNTRY_NAME)));
-                country.setCountryCode(cursor.getString(cursor.getColumnIndex(TB_CITY_CODE)));
-                list.add(country);
+                County county = new County();
+                county.setId(cursor.getInt(cursor.getColumnIndex("id")));
+                county.setCountyName(cursor.getString(cursor.getColumnIndex(TB_COUNTY_NAME)));
+                county.setCountyCode(cursor.getString(cursor.getColumnIndex(TB_COUNTY_CODE)));
+                list.add(county);
             } while (cursor.moveToNext());
         }
         return list;
