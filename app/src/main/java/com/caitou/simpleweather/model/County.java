@@ -6,7 +6,7 @@ package com.caitou.simpleweather.model;
  * @Author: Guangzhao Cai
  * @createTime: 2016-08-04.
  */
-public class Country {
+public class County {
     private int id;
     private String countryName;
     private String countryCode;
