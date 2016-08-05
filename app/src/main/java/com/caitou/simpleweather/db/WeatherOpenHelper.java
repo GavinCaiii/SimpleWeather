@@ -27,10 +27,10 @@ public class WeatherOpenHelper extends SQLiteOpenHelper {
             "city_code text, " +
             "province_id integer)";
     // 县级 表格建表语言
-    public static final String CREATE_COUNTRY = "create table Country (" +
+    public static final String CREATE_COUNTY = "create table county (" +
             "id integer primary key autoincrement, " +
-            "country_name text, " +
-            "country_code text" +
+            "county_name text, " +
+            "county_code text, " +
             "city_id integer)";
 
     public WeatherOpenHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
@@ -42,7 +42,7 @@ public class WeatherOpenHelper extends SQLiteOpenHelper {
         // 创建表格
         sqLiteDatabase.execSQL(CREATE_PROVINCE);
         sqLiteDatabase.execSQL(CREATE_CITY);
-        sqLiteDatabase.execSQL(CREATE_COUNTRY);
+        sqLiteDatabase.execSQL(CREATE_COUNTY);
 
         LogUtil.d(TAG, "onCreate : after create table!");
 

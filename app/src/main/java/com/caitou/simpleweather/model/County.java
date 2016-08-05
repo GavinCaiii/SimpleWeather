@@ -6,10 +6,10 @@ package com.caitou.simpleweather.model;
  * @Author: Guangzhao Cai
  * @createTime: 2016-08-04.
  */
-public class Country {
+public class County {
     private int id;
-    private String countryName;
-    private String countryCode;
+    private String countyName;
+    private String countyCode;
     private int cityId;
 
     public int getCityId() {
@@ -29,18 +29,18 @@ public class Country {
     }
 
     public String getCountryName() {
-        return countryName;
+        return countyName;
     }
 
-    public void setCountryName(String countryName) {
-        this.countryName = countryName;
+    public void setCountyName(String countyName) {
+        this.countyName = countyName;
     }
 
     public String getCountryCode() {
-        return countryCode;
+        return countyCode;
     }
 
-    public void setCountryCode(String countryCode) {
-        this.countryCode = countryCode;
+    public void setCountyCode(String countyCode) {
+        this.countyCode = countyCode;
     }
 }
