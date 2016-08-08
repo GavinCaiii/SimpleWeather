@@ -2,7 +2,10 @@ package com.caitou.simpleweather.activities;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
@@ -17,8 +20,8 @@ import com.caitou.simpleweather.model.City;
 import com.caitou.simpleweather.model.County;
 import com.caitou.simpleweather.model.Province;
 import com.caitou.simpleweather.model.WeatherDB;
-import com.caitou.simpleweather.utils.HandleDataUtil;
 import com.caitou.simpleweather.utils.HttpUtil;
+import com.caitou.simpleweather.utils.Utility;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,6 +66,15 @@ public class ChooseAreaActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        if (sharedPreferences.getBoolean("city_selected", false)) {
+            Intent intent = new Intent(this, WeatherActivity.class);
+            startActivity(intent);
+//            finish();
+            return;
+        }
+
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.choose_area);
 
@@ -73,6 +85,8 @@ public class ChooseAreaActivity extends Activity {
         listView.setAdapter(adapter);
         weatherDB = WeatherDB.getInstance(this);
 
+
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -82,6 +96,13 @@ public class ChooseAreaActivity extends Activity {
                 } else if (currentLevel == LEVEL_CITY) {
                     selectCity = cityList.get(i);
                     queryCounties();
+                } else if (currentLevel == LEVEL_COUNTY) {
+                    String countyCode = countyList.get(i).getCountryCode();
+                    System.out.println("ddddddddddddddddddddd countyCode = " + countyCode);
+                    Intent intent = new Intent(ChooseAreaActivity.this, WeatherActivity.class);
+                    intent.putExtra("county_code", countyCode);
+                    startActivity(intent);
+//                    finish();
                 }
             }
         });
@@ -165,11 +186,11 @@ public class ChooseAreaActivity extends Activity {
             public void onFinish(String response) {
                 boolean result = false;
                 if ("province".equals(type)) {
-                    result = HandleDataUtil.handleProvincesResponse(weatherDB, response);
+                    result = Utility.handleProvincesResponse(weatherDB, response);
                 } else if ("city".equals(type)) {
-                    result = HandleDataUtil.handleCitiesResponse(weatherDB, response, selectProvince.getId());
+                    result = Utility.handleCitiesResponse(weatherDB, response, selectProvince.getId());
                 } else if ("county".equals(type)) {
-                    result = HandleDataUtil.handleCountiesResponse(weatherDB, response, selectCity.getId());
+                    result = Utility.handleCountiesResponse(weatherDB, response, selectCity.getId());
                 }
                 if (result) {
                     // 通过runOnUiThread()方法返回主线处理逻辑
@@ -190,7 +211,7 @@ public class ChooseAreaActivity extends Activity {
             }
 
             @Override
-            public void onError(Exception e) {
+            public void onError() {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
