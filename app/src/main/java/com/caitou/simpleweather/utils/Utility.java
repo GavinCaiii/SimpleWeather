@@ -13,7 +13,7 @@ import com.caitou.simpleweather.model.WeatherDB;
  * @Author: Guangzhao Cai
  * @createTime: 2016-08-05.
  */
-public class HandleDataUtil {
+public class Utility {
 
     // 解析和处理服务器返回的省级数据
     public synchronized static boolean handleProvincesResponse(WeatherDB db, String response) {
