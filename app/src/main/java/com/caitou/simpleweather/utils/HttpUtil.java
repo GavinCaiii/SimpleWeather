@@ -1,11 +1,9 @@
 package com.caitou.simpleweather.utils;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
@@ -36,10 +34,10 @@ public class HttpUtil {
                     if (listener != null) {
                         listener.onFinish(response.toString());
                     }
-                } catch (MalformedURLException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
+                    if (listener != null)
+                        listener.onError();
                 } finally {
                     if (connection != null) {
                         connection.disconnect();
@@ -51,7 +49,7 @@ public class HttpUtil {
 
     public interface HttpCallbackListener {
         void onFinish(String response);
-        void onError(Exception e);
+        void onError();
     }
 }
 
