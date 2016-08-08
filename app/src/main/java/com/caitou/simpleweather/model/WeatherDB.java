@@ -136,6 +136,7 @@ public class WeatherDB {
                 county.setId(cursor.getInt(cursor.getColumnIndex("id")));
                 county.setCountyName(cursor.getString(cursor.getColumnIndex(TB_COUNTY_NAME)));
                 county.setCountyCode(cursor.getString(cursor.getColumnIndex(TB_COUNTY_CODE)));
+                county.setCityId(cityId);
                 list.add(county);
             } while (cursor.moveToNext());
         }

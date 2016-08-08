@@ -227,11 +227,10 @@ public class ChooseAreaActivity extends Activity {
      * */
     @Override
     public void onBackPressed() {
-        System.out.println("ddddddddddddddd " + currentLevel);
-        if (currentLevel == LEVEL_PROVINCE) {
+        if (currentLevel == LEVEL_COUNTY) {
             queryCities();
         } else if (currentLevel == LEVEL_CITY) {
-            queryCounties();
+            queryProvinces();
         } else {
             if ((System.currentTimeMillis() - exitTime) > 2000) {
                 Toast.makeText(ChooseAreaActivity.this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
